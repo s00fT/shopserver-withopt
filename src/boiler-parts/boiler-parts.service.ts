@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
-import { Op } from 'sequelize';
-import { BoilerParts } from './boiler-parts.model';
-import { IBoilerPartsFilter, IBoilerPartsQuery } from './types';
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/sequelize'
+import { Op } from 'sequelize'
+import { BoilerParts } from './boiler-parts.model'
+import { IBoilerPartsFilter, IBoilerPartsQuery } from './types'
 
 @Injectable()
 export class BoilerPartsService {
@@ -40,15 +40,35 @@ export class BoilerPartsService {
   }
 
   async bestsellers(): Promise<{ count: number; rows: BoilerParts[] }> {
-    return this.boilerPartsModel.findAndCountAll({
+    const { count, rows } = await this.boilerPartsModel.findAndCountAll({
       where: { bestseller: true },
+      order: [['id', 'ASC']],
     });
+  
+    const updatedRows = rows.map((item, index) => {
+      item.images = JSON.stringify([
+        `/images/boiler-parts/part-${index + 1}.png`,
+      ])
+      return item
+    });
+  
+    return { count, rows: updatedRows };
   }
-
+  
   async new(): Promise<{ count: number; rows: BoilerParts[] }> {
-    return this.boilerPartsModel.findAndCountAll({
+    const { count, rows } = await this.boilerPartsModel.findAndCountAll({
       where: { new: true },
+      order: [['id', 'ASC']],
     });
+  
+    const updatedRows = rows.map((item, index) => {
+      item.images = JSON.stringify([
+        `/images/boiler-parts/part-${index + 1}.png`,
+      ])
+      return item
+    });
+  
+    return { count, rows: updatedRows };
   }
 
   async findOne(id: number | string): Promise<BoilerParts> {
