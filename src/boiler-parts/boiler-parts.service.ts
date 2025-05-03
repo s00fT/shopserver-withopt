@@ -46,15 +46,19 @@ export class BoilerPartsService {
     });
   
     const updatedRows = rows.map((item, index) => {
-      item.images = JSON.stringify([
-        `/images/boiler-parts/part-${index + 1}.png`,
-      ])
-      return item
+      if (index < 23) {
+        item.images = JSON.stringify([
+          `/images/boiler-parts/part-${index + 1}.png`,
+        ]);
+      } else {
+        item.images = JSON.stringify(['/images/boiler-parts/placeholder.jpg']);
+      }
+      return item;
     });
   
     return { count, rows: updatedRows };
   }
-  
+
   async new(): Promise<{ count: number; rows: BoilerParts[] }> {
     const { count, rows } = await this.boilerPartsModel.findAndCountAll({
       where: { new: true },
@@ -62,10 +66,14 @@ export class BoilerPartsService {
     });
   
     const updatedRows = rows.map((item, index) => {
-      item.images = JSON.stringify([
-        `/images/boiler-parts/part-${index + 1}.png`,
-      ])
-      return item
+      if (index < 23) {
+        item.images = JSON.stringify([
+          `/images/boiler-parts/part-${index + 1}.png`,
+        ]);
+      } else {
+        item.images = JSON.stringify(['/images/boiler-parts/placeholder.jpg']);
+      }
+      return item;
     });
   
     return { count, rows: updatedRows };

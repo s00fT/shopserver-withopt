@@ -1,28 +1,33 @@
-'use strict'
+'use strict';
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     const [parts] = await queryInterface.sequelize.query(
-      `SELECT id FROM BoilerParts WHERE bestseller = true OR new = true ORDER BY id`
-    )
+      'SELECT id FROM `BoilerParts` ORDER BY id'
+    );
 
-    const updates = parts.map((part, index) =>
-      queryInterface.bulkUpdate(
+    const updates = parts.map((part, index) => {
+      const imgPath =
+        index < 23
+          ? `/images/boiler-parts/part-${index + 1}.png`
+          : '/images/boiler-parts/placeholder.jpg';
+
+      return queryInterface.bulkUpdate(
         'BoilerParts',
         {
-          images: JSON.stringify([`/images/boiler-parts/part-${index + 1}.jpg`]),
+          images: JSON.stringify([imgPath]),
         },
         { id: part.id }
-      )
-    )
+      );
+    });
 
-    return Promise.all(updates)
+    return Promise.all(updates);
   },
 
   async down(queryInterface, Sequelize) {
     const [parts] = await queryInterface.sequelize.query(
-      `SELECT id FROM BoilerParts WHERE bestseller = true OR new = true`
-    )
+      'SELECT id FROM `BoilerParts`'
+    );
 
     const updates = parts.map((part) =>
       queryInterface.bulkUpdate(
@@ -32,8 +37,9 @@ module.exports = {
         },
         { id: part.id }
       )
-    )
+    );
 
-    return Promise.all(updates)
+    return Promise.all(updates);
   },
-}
+};
+
