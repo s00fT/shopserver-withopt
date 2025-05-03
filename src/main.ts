@@ -19,7 +19,7 @@ async function bootstrap() {
 
   app.enableCors({
     credentials: true,
-    origin: ['http://localhost:3001', 'shopclient-withopt-production.up.railway.app/'],
+    origin: ['http://localhost:3001', 'shopclient-withopt-production.up.railway.app'],
   });
 
   const config = new DocumentBuilder()
