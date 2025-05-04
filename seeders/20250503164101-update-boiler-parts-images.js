@@ -9,8 +9,8 @@ module.exports = {
     const updates = parts.map((part, index) => {
       const imgPath =
         index < 23
-          ? `/images/boiler-parts/part-${index + 1}.png`
-          : '/images/boiler-parts/placeholder.jpg';
+          ? `/images/boiler-parts/part-${index + 1}.webp`
+          : '/images/boiler-parts/placeholder.webp';
 
       return queryInterface.bulkUpdate(
         'BoilerParts',
