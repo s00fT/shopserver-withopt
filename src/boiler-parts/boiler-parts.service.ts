@@ -48,7 +48,7 @@ export class BoilerPartsService {
     const updatedRows = rows.map((item, index) => {
       if (index < 23) {
         item.images = JSON.stringify([
-          `/images/boiler-parts/part-${index + 1}.png`,
+          `/images/boiler-parts/part-${index + 1}.webp`,
         ]);
       } else {
         item.images = JSON.stringify(['/images/boiler-parts/placeholder.webp']);
